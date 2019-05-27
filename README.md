@@ -6,4 +6,4 @@ the app is running on the cloud for free,so it can crash sometimes,just refresh 
 References :
 i have used this notebook's work in my app(since it is publicly available) : https://www.kaggle.com/kmader/tensorflow-data-keras-for-tuberculosis
 
-thanks to Dr. Kevin Mader : https://databricks.com/speaker/kevin-mader for making the dataset publicly available and putting so much efforts on it
+thanks to Dr. Kevin Mader : https://databricks.com/speaker/kevin-mader for making the dataset publicly available and putting so much effort on it
