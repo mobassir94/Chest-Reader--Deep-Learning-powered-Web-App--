@@ -18,6 +18,8 @@ from gevent.wsgi import WSGIServer
 
 # Define a flask app
 app = Flask(__name__)
+# set the port dynamically with a default of 3000 for local development
+port = int(os.getenv('PORT', '3000'))
 
 # Model saved with Keras model.save()
 MODEL_PATH = 'models/trained_model1.h5'
@@ -81,7 +83,8 @@ def upload():
 
     #this section is used by gunicorn to serve the app on Heroku
 if __name__ == '__main__':
-        app.run()
+        app.run(host='0.0.0.0', port=port)
+        #app.run()
     #uncomment this section to serve the app locally with gevent at:  http://localhost:5000
     # Serve the app with gevent 
     #http_server = WSGIServer(('', 5000), app)

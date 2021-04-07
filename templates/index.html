@@ -1,9 +1,6 @@
 {% extends "base.html" %} {% block content %}
 
 <body>
-
-    
-<br><br>
  
  <div>
     <form id="upload-file" method="post" enctype="multipart/form-data">
@@ -54,18 +51,15 @@ $(document).ready(function(){
 
 
 
-<button id="hide">Click Me to Hide Details</button>
-<button id="show">Click Me to Show some Details About the App</button>
+<button id="hide"> Hide Details</button>
+<button id="show">Show some Details About the App</button>
 
 
 
 <p>
-<div class = "hidemebe" style="display:none">
+<div class = "hidemebe" style="display:none" >
 
 
-
-<h2 align="center" style="background-color: steelblue; color: lightcyan;"> WELCOME TO CHESTREADER!!! </h2>
-<br><br>
 <h5 style="background-color: #05ffb0; color: white;">
 This software uses pre-trained vgg16 with U-NET convolutional neural network (CNN) architecture to recognise tuberculosis on chest x-rays with having model accuracy 97% and validation accuracy 88% and
 The model is trained on a <a href="https://www.kaggle.com/kmader/pulmonary-chest-xray-abnormalities" style="color:black">Dataset
