@@ -18,11 +18,9 @@ from gevent.wsgi import WSGIServer
 
 # Define a flask app
 app = Flask(__name__)
-# set the port dynamically with a default of 3000 for local development
-port = int(os.getenv('PORT', '3000'))
 
 # Model saved with Keras model.save()
-MODEL_PATH = 'models/trained_model1.h5'
+MODEL_PATH = 'models/trained_model.h5'
 
 #Load your trained model
 model = load_model(MODEL_PATH)
@@ -37,7 +35,7 @@ print('Model loaded. Start serving...')
 
 
 def model_predict(img_path, model):
-    img = image.load_img(img_path, target_size=(512, 512)) #target_size must agree with what the trained model expects!!
+    img = image.load_img(img_path, target_size=(64, 64)) #target_size must agree with what the trained model expects!!
 
     # Preprocessing the image
     img = image.img_to_array(img)
@@ -68,23 +66,21 @@ def upload():
 
         # Make prediction
         preds = model_predict(file_path, model)
-        preds = float(preds[0])
         os.remove(file_path)#removes file from the server after prediction has been returned
 
         # Arrange the correct return according to the model. 
 		# In this model 1 is Pneumonia and 0 is Normal.
-        str1 = 'Pulmonary Abnormality(Tuberculosis)'
-        str2 = 'Healthy'
-        if preds > 0.5:
-            return str1+'--> RISK Likelihood = ' + str(preds)+'' + '%'
+        str1 = 'Pneumonia'
+        str2 = 'Normal'
+        if preds == 1:
+            return str1
         else:
-            return str2+'--> RISK Likelihood = ' + str(preds)+'' + '%'
+            return str2
     return None
 
     #this section is used by gunicorn to serve the app on Heroku
 if __name__ == '__main__':
-        app.run(host='0.0.0.0', port=port)
-        #app.run()
+        app.run()
     #uncomment this section to serve the app locally with gevent at:  http://localhost:5000
     # Serve the app with gevent 
     #http_server = WSGIServer(('', 5000), app)
