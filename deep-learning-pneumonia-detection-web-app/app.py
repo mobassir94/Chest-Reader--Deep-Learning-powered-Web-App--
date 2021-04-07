@@ -20,7 +20,7 @@ from gevent.wsgi import WSGIServer
 app = Flask(__name__)
 
 # Model saved with Keras model.save()
-MODEL_PATH = 'models/trained_model.h5'
+MODEL_PATH = 'models/trained_model1.h5'
 
 #Load your trained model
 model = load_model(MODEL_PATH)
@@ -35,14 +35,14 @@ print('Model loaded. Start serving...')
 
 
 def model_predict(img_path, model):
-    img = image.load_img(img_path, target_size=(64, 64)) #target_size must agree with what the trained model expects!!
+    img = image.load_img(img_path, target_size=(96, 96)) #target_size must agree with what the trained model expects!!
 
     # Preprocessing the image
     img = image.img_to_array(img)
     img = np.expand_dims(img, axis=0)
 
    
-    preds = model.predict(img)
+    preds = model.predict_classes(img)
     return preds
 
 
@@ -66,16 +66,17 @@ def upload():
 
         # Make prediction
         preds = model_predict(file_path, model)
+        preds = float(preds[0])
         os.remove(file_path)#removes file from the server after prediction has been returned
 
         # Arrange the correct return according to the model. 
 		# In this model 1 is Pneumonia and 0 is Normal.
-        str1 = 'Pneumonia'
-        str2 = 'Normal'
-        if preds == 1:
-            return str1
+        str1 = 'Pulmonary Abnormality(Tuberculosis)'
+        str2 = 'Healthy'
+        if preds > 0.5:
+            return str1+'--> RISK Likelihood = ' + str(preds)+'' + '%'
         else:
-            return str2
+            return str2+'--> RISK Likelihood = ' + str(preds)+'' + '%'
     return None
 
     #this section is used by gunicorn to serve the app on Heroku
