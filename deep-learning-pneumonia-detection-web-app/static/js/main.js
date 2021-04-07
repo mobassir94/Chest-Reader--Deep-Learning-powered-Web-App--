@@ -1,4 +1,8 @@
-$(document).ready(function () {
+
+
+$(document).ready(
+
+	function () {
     // Init
     $('.image-section').hide();
     $('.loader').hide();
@@ -16,6 +20,9 @@ $(document).ready(function () {
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+
+
     $("#imageUpload").change(function () {
         $('.image-section').show();
         $('#btn-predict').show();
@@ -51,4 +58,8 @@ $(document).ready(function () {
         });
     });
 
-});
+}
+
+);
+
+
